@@ -1,0 +1,14 @@
+- @featured_pages = Page.featured
+#featured_pages.recent_box
+  %h2 Featured Pages
+  - unless @featured_pages.blank?
+    %ul
+      - @featured_pages.each do |page|
+        %li
+          %span= link_to page.title, page.url
+          - updater = page.updated_by || page.created_by
+          - updater_name = updater.name if updater
+          - updater_name = "System" unless updater
+          = "Updated by #{updater_name} #{time_ago_in_words page.updated_at.to_time} ago."
+  - else
+    %p There are currently no Featured Pages.

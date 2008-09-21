@@ -1,0 +1,7 @@
+<div class="row" id="featured">
+  <p><label for="page_featured_page"><%= check_box "page", "featured_page" %> Featured Page</label></p>
+</div>
+<% content_for :page_css do %>
+/* this is how all div.row should be, but we'll be conservative and just set this one */
+#featured { clear: left; overflow: hidden; }
+<% end %>
