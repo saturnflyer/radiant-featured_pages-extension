@@ -1,22 +1,3 @@
-begin
-  require 'jeweler'
-  Jeweler::Tasks.new do |gem|
-    gem.name = "radiant-featured_pages-extension"
-    gem.summary = %Q{Featured Pages Extension for Radiant CMS}
-    gem.description = %Q{Allows you to provide a featured_date for any page and list it with <r:featured_pages>}
-    gem.email = "jim@saturnflyer.com"
-    gem.homepage = "http://github.com/saturnflyer/radiant-featured_pages-extension"
-    gem.authors = ["Jim Gay"]
-    # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
-  end
-rescue LoadError
-  puts "Jeweler (or a dependency) not available. This is only required if you plan to package featured_pages as a gem."
-end
-
-# In rails 1.2, plugins aren't available in the path until they're loaded.
-# Check to see if the rspec plugin is installed first and require
-# it if it is.  If not, use the gem version.
-
 # Determine where the RSpec plugin is by loading the boot
 unless defined? RADIANT_ROOT
   ENV["RAILS_ENV"] = "test"
