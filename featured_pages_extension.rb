@@ -1,5 +1,5 @@
 class FeaturedPagesExtension < Radiant::Extension
-  version "1"
+  version "2"
   description "Adds featured_page field to all pages to allow listing of pages marked regardless of their nesting within parent pages."
   url "http://www.saturnflyer.com/"
   

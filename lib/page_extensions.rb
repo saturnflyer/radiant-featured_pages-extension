@@ -1,9 +1,7 @@
 module PageExtensions
   def self.included(base)
     base.class_eval {
-      def self.featured
-        self.find(:all, :conditions => {:featured_page => true})
-      end
+      named_scope :featured, {:conditions => ["featured_date is NOT NULL or featured_date != ''"]}
     }
   end
 end
