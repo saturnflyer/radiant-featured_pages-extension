@@ -1,5 +1,6 @@
+require 'radiant-featured_pages-extension/version'
 class FeaturedPagesExtension < Radiant::Extension
-  version "2"
+  version RadiantFeaturedPagesExtension::VERSION
   description "Adds featured_date field to all pages to allow listing of pages marked regardless of their nesting within parent pages."
   url "http://www.saturnflyer.com/"
   

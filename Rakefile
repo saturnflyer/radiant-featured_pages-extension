@@ -3,7 +3,7 @@ begin
   Jeweler::Tasks.new do |gem|
     gem.name = "radiant-featured_pages-extension"
     gem.summary = %Q{Featured Pages Extension for Radiant CMS}
-    gem.description = %Q{Describe your extension here}
+    gem.description = %Q{Allows you to provide a featured_date for any page and list it with <r:featured_pages>}
     gem.email = "jim@saturnflyer.com"
     gem.homepage = "http://github.com/saturnflyer/radiant-featured_pages-extension"
     gem.authors = ["Jim Gay"]
