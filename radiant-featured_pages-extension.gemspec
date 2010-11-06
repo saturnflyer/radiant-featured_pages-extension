@@ -19,6 +19,6 @@ Gem::Specification.new do |s|
   
   s.post_install_message = %{
   Add this to your radiant project with:
-    config.gem 'radiant-featured_pages-extension', :version => #{RadiantFeaturedPagesExtension::VERSION}
+    config.gem 'radiant-featured_pages-extension', :version => '#{RadiantFeaturedPagesExtension::VERSION}'
   }
 end
