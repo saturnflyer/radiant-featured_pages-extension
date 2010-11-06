@@ -1,0 +1,9 @@
+%p
+  = f.label :featured_date, 'Featured Date'
+  = f.text_field :featured_date, :class => "date", :value => (@page.featured_date? ? I18n.localize(@page.featured_date.to_date, :format =>:long) : nil)
+- content_for :page_css do
+  -# this is how all div.row should be, but we'll be conservative and just set this one
+  :sass
+    #featured
+      clear: left
+      overflow: hidden
