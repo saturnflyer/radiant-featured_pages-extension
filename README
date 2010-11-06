@@ -1,7 +1,7 @@
 = Featured Pages
 
 Installing Featured Pages allows you to select pages to display for 
-pages that have the featured_page field set to true. 
+pages that have the featured_date field set. 
 
 See HELP_developer.md for more details.
 

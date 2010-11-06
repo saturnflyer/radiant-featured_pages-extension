@@ -1,0 +1,2 @@
+# allow scoping in <r:featured_pages:each> by a page 'path'
+# allow scoping in <r:featured_pages:each> by values in a page field (keywords, tags, category?)

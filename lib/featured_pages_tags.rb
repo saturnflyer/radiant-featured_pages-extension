@@ -13,8 +13,16 @@ module FeaturedPagesTags
   end
   
   desc %{
-    Returns an individual page from the featured_pages scope. Accepts a limit and/or order parameter.
+    Loops over individual pages from the featured_pages scope.
+    Accepts these parameters:
     
+      * order - 'featured_date ASC' default
+      * limit - '10' defaults to no limit
+      * date - no default
+      * format - used only with the date parameters to specify the format of the date you are using
+      * window - '+3 days' no default, allows you to add(+n) or subtract(-n) days, weeks, months, years
+      * offset - '-1 month' no default, allows you to offset the actual date from the date given
+      
     *Usage:*
     <pre><code><r:featured_pages:each [limit="1" order="published_at ASC"]>...</r:featured_pages:each></code></pre>
   }
