@@ -1,4 +1,3 @@
-require 'ap'
 module FeaturedPagesTags
   include Radiant::Taggable
   
@@ -16,9 +15,9 @@ module FeaturedPagesTags
     Loops over individual pages from the featured_pages scope.
     Accepts these parameters:
     
-      * order - 'featured_date ASC' default
-      * limit - '10' defaults to no limit
-      * date - no default
+      * order  - 'featured_date ASC' default
+      * limit  - '10' defaults to no limit
+      * date   - no default
       * format - used only with the date parameters to specify the format of the date you are using
       * window - '+3 days' no default, allows you to add(+n) or subtract(-n) days, weeks, months, years
       * offset - '-1 month' no default, allows you to offset the actual date from the date given
