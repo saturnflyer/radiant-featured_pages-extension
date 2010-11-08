@@ -38,13 +38,13 @@ describe Page do
       save_pages
     end
     it "should output the contents for each featured page" do
-      page.should render('<r:featured_pages:each><r:title /> </r:featured_pages:each>').as('minus_1_week page plus_1_day plus_2_weeks plus_2_months plus_2_years ')
+      page.should render('<r:featured_pages:each><r:title /> </r:featured_pages:each>').as('plus_2_years plus_2_months plus_2_weeks plus_1_day page minus_1_week ')
     end
     it "should not find virtual pages" do
-      page.should render('<r:featured_pages:each><r:title /> </r:featured_pages:each>').as('minus_1_week page plus_1_day plus_2_weeks plus_2_months plus_2_years ')
+      page.should render('<r:featured_pages:each><r:title /> </r:featured_pages:each>').as('plus_2_years plus_2_months plus_2_weeks plus_1_day page minus_1_week ')
     end
     it "should limit the pages by the 'limit' attribute" do
-      page.should render('<r:featured_pages:each limit="1"><r:title /> </r:featured_pages:each>').as('minus_1_week ')
+      page.should render('<r:featured_pages:each limit="1"><r:title /> </r:featured_pages:each>').as('plus_2_years ')
     end
     it "should order the pages by the 'order' attribute" do
       page.should render('<r:featured_pages:each order="featured_date DESC"><r:title /> </r:featured_pages:each>').as('plus_2_years plus_2_months plus_2_weeks plus_1_day page minus_1_week ')
@@ -57,13 +57,13 @@ describe Page do
     end
     
     it "should find pages featured between the given 'date' and and that date plus the 'window'" do
-      page.should render('<r:featured_pages:each date="today" window="1 month"><r:title /> </r:featured_pages:each>').as('page plus_1_day plus_2_weeks ')
+      page.should render('<r:featured_pages:each date="today" window="1 month"><r:title /> </r:featured_pages:each>').as('plus_2_weeks plus_1_day page ')
     end
     it "should find pages featured between the given 'date' plus the 'offset'" do
       page.should render('<r:featured_pages:each date="today" offset="-7 days"><r:title /> </r:featured_pages:each>').as('minus_1_week ')
     end
     it "should find pages featured limited in number by the given 'limit'" do
-      page.should render('<r:featured_pages:each date="today" limit="2" window="2 years"><r:title /> </r:featured_pages:each>').as('page plus_1_day ')
+      page.should render('<r:featured_pages:each date="today" limit="2" window="2 years"><r:title /> </r:featured_pages:each>').as('plus_2_months plus_2_weeks ')
     end
   end
   
@@ -72,7 +72,7 @@ describe Page do
       save_pages
     end
     it "should expand contents if the page is the first in the collection" do
-      page.should render('<r:featured_pages:each><r:if_first><r:title /> </r:if_first></r:featured_pages:each>').as('minus_1_week ')
+      page.should render('<r:featured_pages:each><r:if_first><r:title /> </r:if_first></r:featured_pages:each>').as('plus_2_years ')
     end
   end
   
@@ -81,7 +81,7 @@ describe Page do
       save_pages
     end
     it "should expand contents if the page is not the first in the collection" do
-      page.should render('<r:featured_pages:each><r:unless_first><r:title /> </r:unless_first></r:featured_pages:each>').as('page plus_1_day plus_2_weeks plus_2_months plus_2_years ')
+      page.should render('<r:featured_pages:each><r:unless_first><r:title /> </r:unless_first></r:featured_pages:each>').as('plus_2_months plus_2_weeks plus_1_day page minus_1_week ')
     end
   end
 end

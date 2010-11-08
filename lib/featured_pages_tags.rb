@@ -28,7 +28,7 @@ module FeaturedPagesTags
   tag 'featured_pages:each' do |tag|
     find_options = {:conditions => ["virtual = ?",false]}
     
-    order = tag.attr["order"] || 'featured_date ASC'
+    order = tag.attr["order"] || 'featured_date DESC'
     find_options.merge!(:order => order) if order
     
     limit = tag.attr["limit"] || nil
