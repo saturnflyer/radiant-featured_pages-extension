@@ -1,4 +1,4 @@
-require 'radiant-featured_pages-extension/version'
+require 'radiant-featured_pages-extension'
 class FeaturedPagesExtension < Radiant::Extension
   version RadiantFeaturedPagesExtension::VERSION
   description "Adds featured_date field to all pages to allow listing of pages marked regardless of their nesting within parent pages."
@@ -7,7 +7,7 @@ class FeaturedPagesExtension < Radiant::Extension
   def activate
     Page.class_eval { 
       include FeaturedPagesTags
-      include PageExtensions
+      include RadiantFeaturedPagesExtension::PageExtensions
     }
     admin.page.edit.add :layout, "featured_page_meta"
     if admin.respond_to?(:dashboard)
