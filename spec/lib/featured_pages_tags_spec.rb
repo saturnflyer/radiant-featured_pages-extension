@@ -84,4 +84,92 @@ describe Page do
       page.should render('<r:featured_pages:each><r:unless_first><r:title /> </r:unless_first></r:featured_pages:each>').as('plus_2_months plus_2_weeks plus_1_day page minus_1_week ')
     end
   end
+  
+  describe '<r:if_featured>' do
+    subject{ page }
+    it "should expand contents for a page with a featured date" do
+      page.should render('<r:if_featured>YES!</r:if_featured>').as('YES!')
+    end
+    it 'should not render for a non-featured page' do
+      page.featured_date = nil
+      page.should render('<r:if_featured>YES!</r:if_featured>').as('')
+    end
+    context 'with saved featured pages' do
+      before do
+        save_pages
+      end
+      it {
+        should render(
+          '<r:featured_pages:each date="today" window="1 month"><r:if_featured date="today" window="1 week"><r:title /> </r:if_featured></r:featured_pages:each>'
+        ).as(
+          'plus_1_day page '
+        )
+      }
+      it {
+        should render(
+          '<r:featured_pages:each><r:if_featured date="today" window="1 week" offset="1 week"><r:title /> </r:if_featured></r:featured_pages:each>'
+        ).as(
+          'plus_2_weeks '
+        )
+      }
+      it {
+        should render(
+          '<r:featured_pages:each><r:if_featured date="future" offset="3 weeks"><r:title /> </r:if_featured></r:featured_pages:each>'
+        ).as(
+          'plus_2_years plus_2_months '
+        )
+      }
+      it {
+        should render(
+          '<r:featured_pages:each><r:if_featured date="past" offset="2 weeks"><r:title /> </r:if_featured></r:featured_pages:each>'
+        ).as(
+          'plus_2_weeks plus_1_day page minus_1_week '
+        )
+      }
+    end
+  end
+  
+  describe '<r:unless_featured>' do
+    subject{ page }
+    it "should not expand contents for a page with a featured date" do
+      page.should render('<r:unless_featured>YES!</r:unless_featured>').as('')
+    end
+    it 'should not render for a non-featured page' do
+      page.featured_date = nil
+      page.should render('<r:unless_featured>YES!</r:unless_featured>').as('YES!')
+    end
+    context 'with saved featured pages' do
+      before do
+        save_pages
+      end
+      it {
+        should render(
+          '<r:featured_pages:each date="today" window="1 month"><r:unless_featured date="today" window="1 week"><r:title /> </r:unless_featured></r:featured_pages:each>'
+        ).as(
+          'plus_2_weeks '
+        )
+      }
+      it {
+        should render(
+          '<r:featured_pages:each><r:unless_featured date="today" window="1 week" offset="1 week"><r:title /> </r:unless_featured></r:featured_pages:each>'
+        ).as(
+          'plus_2_years plus_2_months plus_1_day page minus_1_week '
+        )
+      }
+      it {
+        should render(
+          '<r:featured_pages:each><r:unless_featured date="future" offset="3 weeks"><r:title /> </r:unless_featured></r:featured_pages:each>'
+        ).as(
+          'plus_2_weeks plus_1_day page minus_1_week '
+        )
+      }
+      it {
+        should render(
+          '<r:featured_pages:each><r:unless_featured date="past" offset="2 weeks"><r:title /> </r:unless_featured></r:featured_pages:each>'
+        ).as(
+          'plus_2_years plus_2_months '
+        )
+      }
+    end
+  end
 end
