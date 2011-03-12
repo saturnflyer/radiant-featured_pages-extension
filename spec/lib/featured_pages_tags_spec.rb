@@ -126,6 +126,13 @@ describe Page do
           'plus_2_weeks plus_1_day page minus_1_week '
         )
       }
+      it 'should expand if the current page is the latest in the given range' do
+        page.should render(
+          '<r:featured_pages:each><r:if_featured latest="true"><r:title /> </r:if_featured></r:featured_pages:each>'
+        ).as(
+          'page '
+        )
+      end
     end
   end
   
@@ -170,6 +177,13 @@ describe Page do
           'plus_2_years plus_2_months '
         )
       }
+      it 'should not expand if the current page is the latest in the given range' do
+        page.should render(
+          '<r:featured_pages:each><r:unless_featured latest="true"><r:title /> </r:unless_featured></r:featured_pages:each>'
+        ).as(
+          'plus_2_years plus_2_months plus_2_weeks plus_1_day minus_1_week '
+        )
+      end
     end
   end
 end

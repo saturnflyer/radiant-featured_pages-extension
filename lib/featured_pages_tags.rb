@@ -111,6 +111,7 @@ module FeaturedPagesTags
       * format - used only with the date parameters to specify the format of the date you are using
       * window - '+3 days' no default, allows you to add(+n) or subtract(-n) days, weeks, months, years
       * offset - '-1 month' no default, allows you to offset the actual date from the date given
+      * latest - 'true' or 'false'. Defaults to 'false'. Expands only if the page is the latest feature
       
     Selecting a date of 'future' or 'past' will expand the window to any time in the future or past
     beyond the offset.
@@ -120,8 +121,9 @@ module FeaturedPagesTags
   }
   tag 'if_featured' do |tag|
     date = tag.attr["date"] || nil
+    latest = tag.attr['latest'] || false
     
-    if date
+    if date || latest == 'true'
       offset_pair = change_pairs(tag.attr['offset'])
       window_pair = change_pairs(tag.attr['window'])
       
@@ -134,16 +136,17 @@ module FeaturedPagesTags
         Rails.env.test? ? Time.zone.now - 1.second : Time.zone.now
       end
       
-      date_with_offset = focus_date.in_time_zone + offset_pair.first.send(offset_pair.last)
-      date_with_window = date_with_offset + window_pair.first.send(window_pair.last)
+      date_with_offset = (focus_date.in_time_zone + offset_pair.first.send(offset_pair.last)).beginning_of_day
+      date_with_window = (date_with_offset + window_pair.first.send(window_pair.last)).end_of_day
       range_dates = [date_with_offset, date_with_window].sort
       
       in_future_window = (date == 'future' && tag.locals.page.featured_date > date_with_offset)
       in_past_window = (date == 'past' && tag.locals.page.featured_date < date_with_offset)
       in_range_window = (tag.locals.page.featured_date >= range_dates.first.beginning_of_day && tag.locals.page.featured_date <= range_dates.last.end_of_day)
       
-      if in_future_window || in_past_window || in_range_window
-        tag.expand
+      if (latest && Page.featured_before(range_dates.last).first == tag.locals.page) ||
+        in_future_window || in_past_window || in_range_window
+          tag.expand
       end
     else
       tag.expand if tag.locals.page.featured_date.present?
@@ -159,8 +162,9 @@ module FeaturedPagesTags
   }
   tag 'unless_featured' do |tag|
     date = tag.attr["date"] || nil
+    latest = tag.attr['latest'] || false
     
-    if date
+    if date || latest
       offset_pair = change_pairs(tag.attr['offset'])
       window_pair = change_pairs(tag.attr['window'])
       
@@ -181,14 +185,15 @@ module FeaturedPagesTags
       in_past_window = (date == 'past' && tag.locals.page.featured_date < date_with_offset)
       in_range_window = (tag.locals.page.featured_date >= range_dates.first.beginning_of_day && tag.locals.page.featured_date <= range_dates.last.end_of_day)
 
-      unless (in_future_window || in_past_window || in_range_window)
-        tag.expand
+      unless (latest && Page.featured_before(range_dates.last).first == tag.locals.page) ||
+        (in_future_window || in_past_window || in_range_window)
+          tag.expand
       end
     else
       tag.expand unless tag.locals.page.featured_date.present?
     end
   end
-  
+    
   private
   
   def change_pairs(text='')
