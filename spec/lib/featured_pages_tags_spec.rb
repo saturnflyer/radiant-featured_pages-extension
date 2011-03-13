@@ -94,6 +94,10 @@ describe Page do
       page.featured_date = nil
       page.should render('<r:if_featured>YES!</r:if_featured>').as('')
     end
+    it 'should ignore any arguments for a non-featured page' do
+      page.featured_date = nil
+      page.should render('<r:if_featured latest="true">YES!</r:if_featured>').as('')
+    end
     context 'with saved featured pages' do
       before do
         save_pages
@@ -141,9 +145,13 @@ describe Page do
     it "should not expand contents for a page with a featured date" do
       page.should render('<r:unless_featured>YES!</r:unless_featured>').as('')
     end
-    it 'should not render for a non-featured page' do
+    it 'should render for a non-featured page' do
       page.featured_date = nil
       page.should render('<r:unless_featured>YES!</r:unless_featured>').as('YES!')
+    end
+    it 'should ignore any arguments for a non-featured page' do
+      page.featured_date = nil
+      page.should render('<r:unless_featured latest="true">YES!</r:unless_featured>').as('YES!')
     end
     context 'with saved featured pages' do
       before do

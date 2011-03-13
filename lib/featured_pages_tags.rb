@@ -120,6 +120,8 @@ module FeaturedPagesTags
     <pre><code><r:if_featured>...</r:if_featured></code></pre>
   }
   tag 'if_featured' do |tag|
+    return '' if tag.locals.page.featured_date.blank?
+    
     date = tag.attr["date"] || nil
     latest = tag.attr['latest'] || false
     
@@ -161,6 +163,8 @@ module FeaturedPagesTags
     <pre><code><r:unless_featured>...</r:unless_featured></code></pre>
   }
   tag 'unless_featured' do |tag|
+    return tag.expand unless tag.locals.page.featured_date.present?
+    
     date = tag.attr["date"] || nil
     latest = tag.attr['latest'] || false
     
